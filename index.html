@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/colorpicker.css">
+    <link rel="stylesheet" href="node_modules/colorjoe/css/colorjoe.css">
+    <title>FA-SymbolDrawing</title>
+</head>
+
+<body>
+    <div id="cursor">
+        <img class="draw" src="resources/cursor-draw.png">
+    </div>
+    <div id="app">
+        <div id="navbar">
+            <button id="forbtn" class="btn" style="cursor: pointer;">
+                <img src="resources/undo.svg">
+            </button>
+            <button id="backbtn" class="btn" style="cursor: pointer;">
+                <img src="resources/redo.svg">
+            </button>
+            <button id="clearbtn" class="btn" style="cursor: pointer;">Clear</button>
+            <input id="colorinput" type="color" style="cursor: pointer;" value="#00eeff">
+            <input id="sizeinput" type="number" value="30" min="8" max="85" step="2">
+            <button id="copybtn" class="btn" style="cursor: pointer;">Copy</button>
+        </div>
+        <div id="appcontainer">
+            <div id="colorcontainer">
+                <script src="node_modules/colorjoe/dist/colorjoe.min.js"></script>
+                <script src="scripts/colorpicker.js"></script>
+            </div>
+            <div id="pixelcontainer"></div>
+        </div>
+        <script src="scripts/main.js"></script>
+    </div>
+    <script src="scripts/cursor.js"></script>
+</body>
+
+</html>

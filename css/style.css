@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: blueviolet;
+}
+
+#app {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#cursor {
+  display: none;
+  position: fixed;
+  pointer-events: none;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+}
+
+.draw {
+  width: 20px;
+  transform: translate(-50%, -50%);
+}
+
+#navbar,
+#pixelcontainer {
+  background-color: rgb(28, 28, 29);
+  width: 80%;
+  border-radius: 3px;
+}
+#navbar {
+  padding: 1em;
+  margin-bottom: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn,
+input {
+  height: 35px;
+  padding: 0 1em;
+  margin-right: 1em;
+}
+#colorinput {
+  padding: 0 0.25em;
+  width: 100px;
+}
+
+#pixelcontainer {
+  cursor: none;
+  aspect-ratio: 2/1;
+  display: grid;
+  grid-template-columns: repeat(calc(var(--size) * 2), auto);
+  grid-template-rows: repeat(var(--size));
+  gap: 1px;
+  padding: 3px;
+}
+.pixel {
+  background-color: rgb(61, 61, 61);
+  border-radius: 0px;
+}
+
+#appcontainer {
+  display: flex;
+  justify-content: space-between;
+  width: 96%;
+}
+
+@media only screen and (orientation: portrait) {
+  #app {
+    aspect-ratio: 1/2;
+  }
+  #pixelcontainer {
+    aspect-ratio: 1/2;
+    grid-template-columns: repeat(calc(var(--size)), auto);
+    grid-template-rows: repeat(var(--size));
+  }
+}
