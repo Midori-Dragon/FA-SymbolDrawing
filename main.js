@@ -75,9 +75,9 @@ sizeElem.addEventListener("blur", async () => {
 
 document.addEventListener("keydown", async (event) => {
   if (event.key == "z" && event.ctrlKey) {
-    undoContainer();
+    undo();
   } else if (event.key == "y" && event.ctrlKey) {
-    redoContainer();
+    redo();
   } else if (event.key == "c" && event.ctrlKey) {
     copy();
   }
@@ -212,7 +212,7 @@ async function saveState() {
   historyRedo = [];
 }
 
-function undoContainer() {
+function undo() {
   if (historyUndo.length > 1) {
     historyRedo.push(historyUndo[historyUndo.length - 1]);
     historyUndo.pop();
@@ -227,7 +227,7 @@ function undoContainer() {
   }
 }
 
-function redoContainer() {
+function redo() {
   if (historyRedo.length != 0) {
     historyUndo.push(historyRedo[historyRedo.length - 1]);
     historyCurrState = historyRedo[historyRedo.length - 1];
