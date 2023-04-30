@@ -17,16 +17,16 @@
     </div>
     <div id="app">
         <div id="navbar">
-            <button id="forbtn" class="btn" style="cursor: pointer;">
+            <button id="forbtn" class="btn" style="cursor: pointer;" onclick="undo();">
                 <img src="resources/undo.svg">
             </button>
-            <button id="backbtn" class="btn" style="cursor: pointer;">
+            <button id="backbtn" class="btn" style="cursor: pointer;" onclick="redo();">
                 <img src="resources/redo.svg">
             </button>
-            <button id="clearbtn" class="btn" style="cursor: pointer;">Clear</button>
+            <button id="clearbtn" class="btn" style="cursor: pointer;" onclick="clearContainer();">Clear</button>
             <input id="colorinput" type="color" style="cursor: pointer;" value="#00eeff">
             <input id="sizeinput" type="number" value="30" min="8" max="85" step="2">
-            <button id="copybtn" class="btn" style="cursor: pointer;">Copy</button>
+            <button id="copybtn" class="btn" style="cursor: pointer;" onclick="copy();">Copy</button>
         </div>
         <div id="appcontainer">
             <div id="colorcontainer">
