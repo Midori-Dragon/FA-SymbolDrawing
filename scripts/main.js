@@ -1,8 +1,6 @@
 const container = document.getElementById("pixelcontainer");
 const sizeElem = document.getElementById("sizeinput");
 const colorElem = document.getElementById("colorinput");
-const resetBtn = document.getElementById("clearbtn");
-const copyBtn = document.getElementById("copybtn");
 
 let size = sizeElem.value;
 let draw = false;
@@ -10,6 +8,9 @@ let drawMouseButton;
 let drawStartPixel;
 let drawCurrPixel;
 let SelectedCurrPixel;
+let historyUndo = [];
+let historyRedo = [];
+let historyCurrState;
 
 container.addEventListener("mousemove", async (event) => {
   updateCurSelPixel(event.target);
@@ -46,9 +47,8 @@ container.addEventListener("mouseup", async () => {
   draw = false;
   drawStartPixel = null;
   drawCurrPixel = null;
+  saveState();
 });
-
-resetBtn.addEventListener("click", reset);
 
 sizeElem.addEventListener("keyup", async () => {
   if (sizeElem.value > +sizeElem.getAttribute("max")) {
@@ -59,7 +59,7 @@ sizeElem.addEventListener("keyup", async () => {
   }
   const value = parseInt(sizeElem.value);
   size = value % 2 === 0 ? value : value + 1;
-  reset();
+  clearContainer();
 });
 
 sizeElem.addEventListener("blur", async () => {
@@ -73,13 +73,14 @@ sizeElem.addEventListener("blur", async () => {
   sizeElem.value = value % 2 === 0 ? value : value + 1;
 });
 
-copyBtn.addEventListener("click", async () => {
-  let pixels = [];
-  container.querySelectorAll(".pixel").forEach((pixel) => {
-    pixels.push({ x: pixel.getAttribute("x"), y: pixel.getAttribute("y"), color: rgbToHex(pixel.style.backgroundColor) });
-  });
-  let imgText = imageToString(size, pixels);
-  navigator.clipboard.writeText(imgText);
+document.addEventListener("keydown", async (event) => {
+  if (event.key == "z" && event.ctrlKey) {
+    undo();
+  } else if (event.key == "y" && event.ctrlKey) {
+    redo();
+  } else if (event.key == "c" && event.ctrlKey) {
+    copy();
+  }
 });
 
 //* ---------------------------------- Code Begin ---------------------------------- *//
@@ -98,8 +99,11 @@ async function populate(size) {
   }
 }
 
-async function reset() {
+async function clearContainer() {
   container.innerHTML = "";
+  historyCurrState = null;
+  historyUndo = [];
+  historyRedo = [];
   populate(size);
 }
 
@@ -191,4 +195,43 @@ function imageToString(size, pixels) {
     output += "\n";
   }
   return output;
+}
+
+async function copy() {
+  let pixels = [];
+  container.querySelectorAll(".pixel").forEach((pixel) => {
+    pixels.push({ x: pixel.getAttribute("x"), y: pixel.getAttribute("y"), color: rgbToHex(pixel.style.backgroundColor) });
+  });
+  let imgText = imageToString(size, pixels);
+  navigator.clipboard.writeText(imgText);
+}
+
+async function saveState() {
+  historyCurrState = container.innerHTML;
+  historyUndo.push(historyCurrState);
+  historyRedo = [];
+}
+
+function undo() {
+  if (historyUndo.length > 1) {
+    historyRedo.push(historyUndo[historyUndo.length - 1]);
+    historyUndo.pop();
+    historyCurrState = historyUndo[historyUndo.length - 1];
+    container.innerHTML = historyCurrState;
+  } else if (historyUndo.length == 1) {
+    historyRedo.push(historyUndo[historyUndo.length - 1]);
+    historyUndo.pop();
+    historyCurrState = "";
+    container.innerHTML = historyCurrState;
+    populate(size);
+  }
+}
+
+function redo() {
+  if (historyRedo.length != 0) {
+    historyUndo.push(historyRedo[historyRedo.length - 1]);
+    historyCurrState = historyRedo[historyRedo.length - 1];
+    historyRedo.pop();
+    container.innerHTML = historyCurrState;
+  }
 }

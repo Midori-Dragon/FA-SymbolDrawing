@@ -11,3 +11,6 @@ colorInputElem.oninput = async (event) => {
 joe.on("change", async (color) => {
   colorInputElem.value = color.hex();
 });
+
+colorInputElem.value = "#00eeff";
+joe.set("#00eeff");
