@@ -2,4 +2,5 @@
 url: "https://midori-dragon.github.io"
 favicon: resources/favicon.ico
 include:
-  - node_modules/**
+  - node_modules/colorjoe/dist/colorjoe.min.js
+  - node_modules/colorjoe/css/colorjoe.css
