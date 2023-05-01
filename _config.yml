@@ -1,2 +1,5 @@
+#baseurl: ""
+url: "https://midori-dragon.github.io"
+favicon: resources/favicon.ico
 include:
-  - node_modules
+  - "**"
